@@ -1,0 +1,9 @@
+services:
+  glassfish:
+    build: .
+    image: calculator-simple-glassfish:latest
+    container_name: calculator-simple-glassfish
+    ports:
+      - "8080:8080"
+      - "4848:4848"
+      - "3700:3700"

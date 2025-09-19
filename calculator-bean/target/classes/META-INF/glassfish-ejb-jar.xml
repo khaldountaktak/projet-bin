@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glassfish-ejb-jar xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   version="3.2"
+                   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/glassfish-ejb-jar_3_2.xsd">
+  <enterprise-beans>
+    <ejb>
+      <ejb-name>CalculatorBean</ejb-name>
+      <jndi-name>calculator/CalculatorRemote</jndi-name>
+    </ejb>
+  </enterprise-beans>
+</glassfish-ejb-jar>

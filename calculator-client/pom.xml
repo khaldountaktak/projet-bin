@@ -1,0 +1,90 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>edu.tsp.calculator</groupId>
+    <artifactId>calculator-ejb</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>calculator-client</artifactId>
+  <packaging>jar</packaging>
+  <name>Calculator Client</name>
+
+  <dependencies>
+    <!-- API commune -->
+    <dependency>
+      <groupId>edu.tsp.calculator</groupId>
+      <artifactId>calculator-api</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+
+    <!-- Jakarta EE API (interfaces), fournie par le serveur -->
+    <dependency>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-api</artifactId>
+      <version>10.0.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Libs client GlassFish pour JNDI/IIOP -->
+    <dependency>
+      <groupId>org.glassfish.main.appclient</groupId>
+      <artifactId>gf-client</artifactId>
+      <version>7.0.23</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.main.ejb</groupId>
+      <artifactId>ejb-client</artifactId>
+      <version>7.0.25</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Lancer en appelant "java" + %classpath + options JVM -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>java</executable>
+          <classpathScope>runtime</classpathScope>
+          <commandlineArgs>
+            --add-opens=java.base/java.lang=ALL-UNNAMED
+            --add-opens=java.base/java.util=ALL-UNNAMED
+            --add-opens=java.naming/javax.naming.spi=ALL-UNNAMED
+            --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+            --add-exports=java.naming/com.sun.jndi.ldap=ALL-UNNAMED
+            -cp %classpath
+            app.client.Client
+          </commandlineArgs>
+        </configuration>
+      </plugin>
+
+      <!-- Compilation Java 11 sans annotation processing -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <release>11</release>
+          <compilerArgs>
+            <arg>-proc:none</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
